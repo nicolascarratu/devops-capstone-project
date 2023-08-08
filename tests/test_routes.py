@@ -128,9 +128,7 @@ class TestAccountService(TestCase):
 
     def test_get_account(self):
         account = self._create_accounts(1)[0]
-        resp = self.client.get(
-        f"{BASE_URL}/{account.id}", content_type="application/json"
-        )
+        resp = self.client.get(f"{BASE_URL}/{account.id}", content_type="application/json")
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(data["name"], account.name)
@@ -150,11 +148,12 @@ class TestAccountService(TestCase):
         # update the account
         new_account = resp.get_json()
         new_account["name"] = "Something Known"
-        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        resp = self.client.put(
+            f"{BASE_URL}/{new_account['id']}", json=new_account)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
-    
+
     def test_delete_account(self):
         """It should Delete an Account"""
         account = self._create_accounts(1)[0]
